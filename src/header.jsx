@@ -1,9 +1,21 @@
 import NavBrand from './assets/images/transparent.png'
 import discord from './assets/images/discord.png'
 import { Disclosure, Transition } from '@headlessui/react'
-import { ChevronDown } from 'heroicons-react'
+import ChevronDownIcon from '@heroicons/react/20/solid/ChevronDownIcon'
+import React, { useState } from 'react';
+import PromptModal from './prompt';
 
 export default function NavBar() {
+  const [isPromptOpen, setIsPromptOpen] = useState(false);
+
+  const handlePromptSubmit = (value) => {
+    console.log(`User entered: ${value}`);
+    setIsPromptOpen(false);
+  };
+
+  const handlePromptCancel = () => {
+    setIsPromptOpen(false);
+  };
     return (
         // Making 2 navbars 
         <header className='fixed w-full z-50'>
@@ -32,6 +44,11 @@ export default function NavBar() {
                                 <div className='h-1.5 w-1.5 bg-white rounded-full'></div>
                                 Gallery
                             </a>
+                            <a href='#' onClick={() => setIsPromptOpen(true)} className='flex  items-center gap-2 hover:translate-x-2 duration-300'>
+                                <div className='h-1.5 w-1.5 bg-white rounded-full'></div>
+                                Prompt
+                            </a>
+                            <PromptModal isOpen={isPromptOpen} title="Panaromic View to Genertate" message="Please enter :" defaultValue="" onSubmit={handlePromptSubmit} onCancel={handlePromptCancel}/>
                         </div>
                     </div>
                     <a href='#' className='flex items-center gap-1 px-3 p-3 text-gray-200 fixed bottom-0'>
@@ -62,7 +79,7 @@ export default function NavBar() {
                                             `${open?'rotate-180':'rotate-0'}
                                             transition-all duration-500 rounded-full border-2 p-0.5 flex items-center justify-center border-t-red-400`
                                             }>
-                                            <ChevronDown />
+                                            <ChevronDownIcon />
                                         </div>
                                     </Disclosure.Button>
                                 </div>
@@ -89,6 +106,7 @@ export default function NavBar() {
                                             <div className='h-1.5 w-1.5 bg-white rounded-full'></div>
                                             Gallery
                                         </a>
+                            
                                     </Disclosure.Panel>
                                 </Transition>
                             </>

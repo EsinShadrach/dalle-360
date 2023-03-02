@@ -7,11 +7,15 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "watch":"tailwindcss -i ./src/assets/css/index.css -o ./src/assets/css/style.css --watch"
+    "watch": "tailwindcss -i ./src/assets/css/index.css -o ./src/assets/css/style.css --watch"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.12",
+    "@heroicons/react": "^2.0.16",
+    "classnames": "^2.3.2",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-modal": "^3.16.1"
   },
   "devDependencies": {
     "@types/react": "^18.0.26",
