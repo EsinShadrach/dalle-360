@@ -100,12 +100,14 @@ export default function NavBar() {
 				setIsOpen={setIsOpen}
 				isOpen={isOpen}
 				handleSubmit={handleSubmit}
+				setShowSettings={setShowSettings}
+				showSettings={showSettings}
 			/>
 		</header>
 	);
 }
 
-function MobileNav({ setIsOpen, isOpen, handleSubmit }) {
+function MobileNav({ setIsOpen, isOpen, handleSubmit, setShowSettings, showSettings }) {
 	return (
 		<nav className="text-white bg-black w-full p-3 md:hidden">
 			<div>
@@ -181,6 +183,23 @@ function MobileNav({ setIsOpen, isOpen, handleSubmit }) {
 											isOpen={isOpen}
 											setIsOpen={setIsOpen}
 											onSubmit={handleSubmit}
+										/>
+									</button>
+									<button
+										onClick={() => setShowSettings(true)}
+										className="flex items-center gap-1 hover:translate-x-2 duration-300"
+									>
+										<Cog
+											className={`${
+												showSettings
+													? "text-rose-600"
+													: "text-inherit"
+											}`}
+										/>
+										Settings
+										<SettingsPrompt
+											isOpen={showSettings}
+											setIsOpen={setShowSettings}
 										/>
 									</button>
 								</Disclosure.Panel>
