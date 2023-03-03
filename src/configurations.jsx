@@ -3,6 +3,7 @@ import {
 	CheckIcon,
 	ChevronUpDownIcon,
 	XMarkIcon,
+	CheckCircleIcon
 } from "@heroicons/react/20/solid";
 import { Dialog, Transition, Listbox, Disclosure } from "@headlessui/react";
 import dalle_dark from './assets/images/dall.png'
@@ -36,71 +37,72 @@ const roomStyle = [
 
 const rs = [
 	{
-		id:1,
-		name:"Luxury House",
-		data:[
-			{
-				id:1, 
-				name:"Light Bloom",
-			},
-			{
-				id:2, 
-				name:"Atmospheric",
-			},
-			{
-				id:3, 
-				name:"Cozy",
-			},
-			{
-				id:4, 
-				name:"Plants",
-			},
-			{
-				id:5, 
-				name:"Minimalist Contemporary Modern Design Living Room",
-			},
-			{
-				id:6, 
-				name:"Fabric And Textile",
-			},
-		]
+		id:1, 
+		name:"Light Bloom",
+		type:"Luxury House"
 	},
 	{
 		id:2, 
-		name:"Office Room",
-		data:[
-			{
-				id:1, 
-				name:"LED Lights",
-			},
-			{
-				id:2, 
-				name:"Seats",
-			},
-			{
-				id:3, 
-				name:"Coffee Table",
-			},
-			{
-				id:4, 
-				name:"Carpet",
-			},
-			{
-				id:5, 
-				name:"Dinner Table",
-			},
-			{
-				id:6, 
-				name:"Wide Windows",
-			},
-		]
-	}
+		name:"Atmospheric",
+		type:"Luxury House"
+	},
+	{
+		id:3, 
+		name:"Cozy",
+		type:"Luxury House"
+	},
+	{
+		id:4, 
+		name:"Plants",
+		type:"Luxury House"
+	},
+	{
+		id:5, 
+		name:"Minimalist Contemporary Modern Design Living Room",
+		type:"Luxury House"
+	},
+	{
+		id:6, 
+		name:"Fabric And Textile",
+		type:"Luxury House"
+	},
+	{
+		id:7, 
+		name:"LED Lights",
+		type:"Office Room"
+	},
+	{
+		id:8, 
+		name:"Seats",
+		type:"Office Room"
+	},
+	{
+		id:9, 
+		name:"Coffee Table",
+		type:"Office Room"
+	},
+	{
+		id:10, 
+		name:"Carpet",
+		type:"Office Room"
+	},
+	{
+		id:11, 
+		name:"Dinner Table",
+		type:"Office Room"
+	},
+	{
+		id:12, 
+		name:"Wide Windows",
+		type:"Office Room"
+	},
 ]
 
 export default function SettingsPrompt({ isOpen, setIsOpen }) {
 	function closeModal() {
 		setIsOpen(false);
 	}
+	let [data, setData] = useState("Luxury House")
 
 	return (
 		<>
@@ -164,11 +166,12 @@ export default function SettingsPrompt({ isOpen, setIsOpen }) {
 														arrayOfObjects={
 															roomType
 														}
+														setData={setData}
 													/>
 												</div>
 											</div>
 											<div className="w-full">
-												<Sample />
+												<Sample filter={data} />
 											</div>
 										</div>
 									</Dialog.Title>
@@ -199,7 +202,7 @@ const people = [
 	{ id: 5, name: "Tanya Fox" },
 	{ id: 6, name: "Hellen Schmidt" },
 ];
-function Demo({ arrayOfObjects }) {
+function Demo({ arrayOfObjects, setData }) {
 	const [selected, setSelected] = useState(arrayOfObjects[0]);
 	function isSelected(a, b) {
 		if (a === b) {
@@ -241,6 +244,7 @@ function Demo({ arrayOfObjects }) {
 									value={option}
 								>
 									<button
+										onClick={(e)=>setData(e.target.textContent)}
 										className={`${
 											isSelected(
 												option.name,
@@ -270,10 +274,17 @@ function Demo({ arrayOfObjects }) {
 	);
 }
 
-function Sample(){
-	let [buttonText, setButtonText] = useState("Environment")
-	function apple(){
-		setButtonText()
+function Sample({filter}){
+	let [buttonText, setButtonText] = useState(["Environment"])
+	let [hasItem, setHasItem] = useState([])
+	function apple(event){
+		// console.log(buttonText.includes("Environment"))
+		if (buttonText.includes("Environment")){
+			buttonText.splice(buttonText.indexOf("Environment"), 1);
+		}
+		if (buttonText.includes(event.target.textContent)===false){
+			setButtonText(current => [...current, event.target.textContent]);
+		}
 	}
 	return (
 		<Disclosure>
@@ -281,7 +292,20 @@ function Sample(){
 				<>
 					<Disclosure.Button className="w-full">
 						<div className="w-full border rounded-lg px-3 p-2 flex justify-between">
-							{buttonText}
+							<div className="flex gap-2 flex-wrap">
+								{buttonText.map((item)=>{
+									if ('a') { // wanted to add a conditional logic here to check if an item is under group
+										return (
+											<div>
+												<div className="bg-emerald-200 rounded-md p-1 px-3 text-emerald-900 flex justify-between gap-2">
+													{item}
+													<CheckCircleIcon className="w-6 h-6" />
+												</div>
+											</div>
+										)
+									}
+								})}
+							</div>
 							<ChevronUpDownIcon className="w-6 h-6" />
 						</div>
 					</Disclosure.Button>
@@ -294,12 +318,21 @@ function Sample(){
 						leaveTo="opacity-0"
 					>
 						<Disclosure.Panel className="py-2 space-y-2">
-							<div className="bg-blue-100 text-blue-900 rounded p-2.5" onClick={apple}>
-								Hello
-							</div>
-							<div className="bg-blue-100 text-blue-900 rounded p-2.5" onClick={apple}>
-								hello 2
-							</div>
+							{rs.map((item)=>{
+								if (item.type === filter) {
+									// setHasItem(current => [...current, item.name])
+									return (
+										<>
+											<div role="button" tabIndex={1} className={`${buttonText.includes(item.name)?'bg-blue-100 text-blue-900':''} rounded p-2.5 flex justify-between`} onClick={apple}>
+												{item.name}
+												{buttonText.includes(item.name) && <div>
+													<CheckIcon className="w-6 h-6" />
+												</div>}
+											</div>
+										</>
+									)
+								}
+							})}
 						</Disclosure.Panel>
 					</Transition>
 				</>
