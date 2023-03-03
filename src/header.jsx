@@ -69,16 +69,19 @@ export default function NavBar() {
 							</button>
 							<button
 								onClick={() => setShowSettings(true)}
-								className="flex items-center gap-1 hover:translate-x-2 duration-300"
+								className="flex items-center gap-2 hover:translate-x-2 duration-300"
 							>
-								<Cog
-									className={`${
+								<div
+									className={`h-1.5 w-1.5 ${
 										showSettings
-											? "text-rose-600"
-											: "text-inherit"
-									}`}
-								/>
-								Settings
+											? "bg-rose-600"
+											: "bg-white"
+									} rounded-full`}
+								></div>
+								<div>
+									View 360
+									<sup>o</sup>
+								</div>
 								<SettingsPrompt
 									isOpen={showSettings}
 									setIsOpen={setShowSettings}
@@ -187,16 +190,19 @@ function MobileNav({ setIsOpen, isOpen, handleSubmit, setShowSettings, showSetti
 									</button>
 									<button
 										onClick={() => setShowSettings(true)}
-										className="flex items-center gap-1 hover:translate-x-2 duration-300"
+										className="flex items-center gap-2 hover:translate-x-2 duration-300"
 									>
-										<Cog
-											className={`${
+										<div
+											className={`h-1.5 w-1.5 ${
 												showSettings
-													? "text-rose-600"
-													: "text-inherit"
-											}`}
-										/>
-										Settings
+													? "bg-rose-600"
+													: "bg-white"
+											} rounded-full`}
+										></div>
+										<div>
+											View 360
+											<sup>o</sup>
+										</div>
 										<SettingsPrompt
 											isOpen={showSettings}
 											setIsOpen={setShowSettings}

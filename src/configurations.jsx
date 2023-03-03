@@ -4,7 +4,7 @@ import {
 	ChevronUpDownIcon,
 	XMarkIcon,
 } from "@heroicons/react/20/solid";
-import { Dialog, Transition, Listbox } from "@headlessui/react";
+import { Dialog, Transition, Listbox, Disclosure } from "@headlessui/react";
 import dalle_dark from './assets/images/dall.png'
 
 const viewType = [
@@ -33,31 +33,69 @@ const roomStyle = [
 	{ id: 13, name: "Dinner table" },
 	{ id: 14, name: "wide windows" },
 ];
-/*
-View Type
-Panoramic view
-Wide angle
 
-Room Type
-Luxury house
-Office room
-
-Room Styles
-Luxury house
-light bloom
-Atmospheric
-Cozy
-Plants
-minimalist contemporary modern design living room
-fabric and textiles
-Office room
-LED lights
-Seats
-coffee table
-Carpet
-Dinner table
-wide windows
-*/
+const rs = [
+	{
+		id:1,
+		name:"Luxury House",
+		data:[
+			{
+				id:1, 
+				name:"Light Bloom",
+			},
+			{
+				id:2, 
+				name:"Atmospheric",
+			},
+			{
+				id:3, 
+				name:"Cozy",
+			},
+			{
+				id:4, 
+				name:"Plants",
+			},
+			{
+				id:5, 
+				name:"Minimalist Contemporary Modern Design Living Room",
+			},
+			{
+				id:6, 
+				name:"Fabric And Textile",
+			},
+		]
+	},
+	{
+		id:2, 
+		name:"Office Room",
+		data:[
+			{
+				id:1, 
+				name:"LED Lights",
+			},
+			{
+				id:2, 
+				name:"Seats",
+			},
+			{
+				id:3, 
+				name:"Coffee Table",
+			},
+			{
+				id:4, 
+				name:"Carpet",
+			},
+			{
+				id:5, 
+				name:"Dinner Table",
+			},
+			{
+				id:6, 
+				name:"Wide Windows",
+			},
+		]
+	}
+]
 
 export default function SettingsPrompt({ isOpen, setIsOpen }) {
 	function closeModal() {
@@ -130,9 +168,7 @@ export default function SettingsPrompt({ isOpen, setIsOpen }) {
 												</div>
 											</div>
 											<div className="w-full">
-												<Demo
-													arrayOfObjects={roomStyle}
-												/>
+												<Sample />
 											</div>
 										</div>
 									</Dialog.Title>
@@ -204,7 +240,7 @@ function Demo({ arrayOfObjects }) {
 									}
 									value={option}
 								>
-									<div
+									<button
 										className={`${
 											isSelected(
 												option.name,
@@ -223,7 +259,7 @@ function Demo({ arrayOfObjects }) {
 												<CheckIcon className="w-6 h-6" />
 											</div>
 										)}
-									</div>
+									</button>
 								</Listbox.Option>
 							))}
 						</Listbox.Options>
@@ -232,4 +268,42 @@ function Demo({ arrayOfObjects }) {
 			</Listbox>
 		</div>
 	);
+}
+
+function Sample(){
+	let [buttonText, setButtonText] = useState("Environment")
+	function apple(){
+		setButtonText()
+	}
+	return (
+		<Disclosure>
+			{({open}) => (
+				<>
+					<Disclosure.Button className="w-full">
+						<div className="w-full border rounded-lg px-3 p-2 flex justify-between">
+							{buttonText}
+							<ChevronUpDownIcon className="w-6 h-6" />
+						</div>
+					</Disclosure.Button>
+					<Transition
+						enter="ease-out duration-300"
+						enterFrom="opacity-0"
+						enterTo="opacity-100"
+						leave="ease-in duration-200"
+						leaveFrom="opacity-100"
+						leaveTo="opacity-0"
+					>
+						<Disclosure.Panel className="py-2 space-y-2">
+							<div className="bg-blue-100 text-blue-900 rounded p-2.5" onClick={apple}>
+								Hello
+							</div>
+							<div className="bg-blue-100 text-blue-900 rounded p-2.5" onClick={apple}>
+								hello 2
+							</div>
+						</Disclosure.Panel>
+					</Transition>
+				</>
+			)}
+		</Disclosure>
+	)
 }
