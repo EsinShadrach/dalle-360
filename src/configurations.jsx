@@ -5,6 +5,7 @@ import {
 	XMarkIcon,
 } from "@heroicons/react/20/solid";
 import { Dialog, Transition, Listbox } from "@headlessui/react";
+import dalle_dark from './assets/images/dall.png'
 
 const viewType = [
 	{ id: 1, name: "Paranomic View" },
@@ -96,6 +97,9 @@ export default function SettingsPrompt({ isOpen, setIsOpen }) {
 										className="text-lg font-medium leading-6 text-gray-900"
 									>
 										<div className="flex items-center mb-4 ">
+											<div>
+												<img className="w-10 h-10" src={dalle_dark} alt="" draggable={false}/>
+											</div>
 											<div className="text-center w-full">
 												~ Configure ~
 											</div>
