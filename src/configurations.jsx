@@ -98,6 +98,24 @@ const rs = [
 	},
 ]
 
+const officeRoom = [
+	"LED Lights",
+	"Seats",
+	"Coffee Table",
+	"Carpet",
+	"Dinner Table",
+	"Wide Windows"
+]
+
+const LuxuryHouse = [
+	"Light Bloom",
+	"Atmospheric",
+	"Cozy",
+	"Plants",
+	"Minimalist Contemporary Modern Design Living Room",
+	"Fabric And Textiles"
+]
+
 export default function SettingsPrompt({ isOpen, setIsOpen }) {
 	function closeModal() {
 		setIsOpen(false);
@@ -276,7 +294,6 @@ function Demo({ arrayOfObjects, setData }) {
 
 function Sample({filter}){
 	let [buttonText, setButtonText] = useState(["Environment"])
-	let [hasItem, setHasItem] = useState([])
 	function apple(event){
 		// console.log(buttonText.includes("Environment"))
 		if (buttonText.includes("Environment")){
@@ -294,16 +311,14 @@ function Sample({filter}){
 						<div className="w-full border rounded-lg px-3 p-2 flex justify-between">
 							<div className="flex gap-2 flex-wrap">
 								{buttonText.map((item)=>{
-									if ('a') { // wanted to add a conditional logic here to check if an item is under group
-										return (
-											<div>
-												<div className="bg-emerald-200 rounded-md p-1 px-3 text-emerald-900 flex justify-between gap-2">
-													{item}
-													<CheckCircleIcon className="w-6 h-6" />
-												</div>
+									return (
+										<div key={item}>
+											<div className="bg-emerald-200 rounded-md p-1 px-3 text-emerald-900 flex justify-between gap-2">
+												{item}
+												<CheckCircleIcon className="w-6 h-6" />
 											</div>
-										)
-									}
+										</div>
+									)
 								})}
 							</div>
 							<ChevronUpDownIcon className="w-6 h-6" />
@@ -323,7 +338,7 @@ function Sample({filter}){
 									// setHasItem(current => [...current, item.name])
 									return (
 										<>
-											<div role="button" tabIndex={1} className={`${buttonText.includes(item.name)?'bg-blue-100 text-blue-900':''} rounded p-2.5 flex justify-between`} onClick={apple}>
+											<div key={item.id} role="button" tabIndex={1} className={`${buttonText.includes(item.name)?'bg-blue-100 text-blue-900':''} rounded p-2.5 flex justify-between`} onClick={apple}>
 												{item.name}
 												{buttonText.includes(item.name) && <div>
 													<CheckIcon className="w-6 h-6" />
