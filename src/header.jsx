@@ -1,24 +1,52 @@
 import NavBrand from "./assets/images/transparent.png";
 import discord from "./assets/images/discord.png";
-import { Disclosure, Transition } from "@headlessui/react";
-import { ChevronDown, Cog } from "heroicons-react";
-import InputPrompt from "./prompt";
+import { Tab } from "@headlessui/react";
 import { useState } from "react";
-import SettingsPrompt from "./configurations";
+import EnvironmentConfig from './configurations'
+import FilteredConfig from "./filteredConfig";
+import MobileNav from "./headerMobile";
+
+const livingRoomProperties= [
+	"LED lights",
+	"Seats",
+	"Coffee Table",
+	"Carpet",
+	"Dinner Table",
+	"Wide Windows",
+	"Plants"
+]
+const mountainProperties = [
+	"Sunset",
+	"Thunder Clouds",
+	"Sunrise",
+	"Starry Night"
+]// in mountain only one item can be there...
 
 export default function NavBar() {
-	let [isOpen, setIsOpen] = useState(false);
-	let [showSettings, setShowSettings] = useState(false);
-
-	function handleSubmit(value) {
-		console.log(`User entered: ${value}`);
-		setIsOpen(false);
+	let [properties, setProperties] = useState("Environment");
+	let [environment, setEnvironment] = useState("Living Room");
+    let [sceneItems, setSceneItems] = useState([])
+	const [objectsOfEnvironment, setObjectOfEnvironment] = useState(livingRoomProperties)
+	
+	function setEnviron(property, environment) {
+		setEnvironment(environment);
+		setProperties(property);
+		if (environment === "Mountain"){
+			setObjectOfEnvironment(mountainProperties)
+		} else {
+			setObjectOfEnvironment(livingRoomProperties)
+		}
 	}
-
+		
+	function handleSubmit(){
+		let toBeSubmitted = `An Equirectangular view of a ${environment} with ${sceneItems.join(", ")}.`
+		console.log(toBeSubmitted);
+	}
+	
 	return (
 		// Making 2 navbar
-		<header className="fixed w-full z-50">
-			<nav className="hidden md:block bg-black text-white fixed h-screen p-3">
+		<header className="fixed w-full z-50 flex ">
+			<nav className="hidden md:flex bg-black text-white fixed h-screen p-3">
 				<div className="flex flex-col h-full gap-36 overflow-auto">
 					<div className="flex items-center justify-center gap-2">
 						<div>
@@ -28,67 +56,71 @@ export default function NavBar() {
 							DALL-E - 360
 						</div>
 					</div>
-					<div className="h-fulls flex items-center mb-20">
-						<div className="flex flex-col gap-3 ">
-							<a
-								href="#"
-								className="flex  items-center gap-2 hover:translate-x-2 duration-300"
-							>
-								<div className="h-1.5 w-1.5 bg-rose-600 rounded-full"></div>
-								Home
-							</a>
-							<a
-								href="#"
-								className="flex  items-center gap-2 hover:translate-x-2 duration-300"
-							>
-								<div className="h-1.5 w-1.5 bg-white rounded-full"></div>
-								Early Access
-							</a>
-							<a
-								href="#"
-								className="flex  items-center gap-2 hover:translate-x-2 duration-300"
-							>
-								<div className="h-1.5 w-1.5 bg-white rounded-full"></div>
-								Gallery
-							</a>
-							<button
-								onClick={() => setIsOpen(true)}
-								className="flex  items-center gap-2 hover:translate-x-2 duration-300"
-							>
-								<div
-									className={`h-1.5 w-1.5 ${
-										isOpen ? "bg-rose-600" : "bg-white"
-									} rounded-full`}
-								></div>
-								Prompt
-								<InputPrompt
-									isOpen={isOpen}
-									setIsOpen={setIsOpen}
-									onSubmit={handleSubmit}
-								/>
-							</button>
-							<button
-								onClick={() => setShowSettings(true)}
-								className="flex items-center gap-2 hover:translate-x-2 duration-300"
-							>
-								<div
-									className={`h-1.5 w-1.5 ${
-										showSettings
-											? "bg-rose-600"
-											: "bg-white"
-									} rounded-full`}
-								></div>
-								<div>
-									View 360
-									<sup>o</sup>
-								</div>
-								<SettingsPrompt
-									isOpen={showSettings}
-									setIsOpen={setShowSettings}
-								/>
-							</button>
-						</div>
-					</div>
+					<Tab.Group className="flex items-center mb-20">
+						<Tab.List className="flex flex-col gap-3 w-full">
+							<Tab className="flex w-full focus:outline-none">
+								{({selected})=>(
+									<a href="#" className="flex flex-row items-center gap-2 focus:outline-none hover:translate-x-2 focus:translate-x-2 duration-300">
+										<div className={`h-1.5 w-1.5 rounded-full transition-all duration-300 ${selected?"bg-rose-500 h-full":"bg-white"}`}></div>
+										Home
+									</a>
+								)}
+							</Tab>
+							<Tab className="flex w-full focus:outline-none">
+								{({selected})=>(
+									<a href="#" className="flex flex-row items-center gap-2 focus:outline-none hover:translate-x-2 focus:translate-x-2 duration-300">
+										<div className={`h-1.5 w-1.5 rounded-full transition-all duration-300 ${selected?"bg-rose-500 h-full":"bg-white"}`}></div>
+										Early Access
+									</a>
+								)}
+							</Tab>
+							<Tab className="flex w-full focus:outline-none">
+								{({selected})=>(
+									<a href="#" className="flex flex-row items-center gap-2 focus:outline-none hover:translate-x-2 focus:translate-x-2 duration-300">
+										<div className={`h-1.5 w-1.5 rounded-full transition-all duration-300 ${selected?"bg-rose-500 h-full":"bg-white"}`}></div>
+										Gallery
+									</a>
+								)}
+							</Tab>
+							<Tab className="w-full flex items-center gap-2 focus:outline-none">
+								{({selected})=>(
+									<>
+										<div className={`h-1.5 w-1.5 rounded-full transition-all duration-300 ${selected?"bg-rose-500 h-full":"bg-white"}`}></div>
+										<EnvironmentConfig
+											styling={`${selected?'border-rose-400':'border-white'}`}
+											environment={environment}
+											setEnvironment={setEnvironment}
+											properties={properties}
+											setProperties={setProperties}
+											setObjectOfEnvironment={setObjectOfEnvironment}
+											objectsOfEnvironment={objectsOfEnvironment}
+											setEnviron={setEnviron}
+										/>
+									</>
+								)}
+							</Tab>
+							<Tab className="w-full flex items-center gap-2 focus:outline-none">
+								{({selected})=>(
+									<>
+										<div className={`h-1.5 w-1.5 rounded-full transition-all duration-300 ${selected?"bg-rose-500 h-full":"bg-white"}`}></div>
+										<FilteredConfig
+											styling={`${selected?'border-rose-400':'border-white'}`}
+											environment={environment}
+											setEnvironment={setEnvironment}
+											properties={properties}
+											setProperties={setProperties}
+											setObjectOfEnvironment={setObjectOfEnvironment}
+											objectsOfEnvironment={objectsOfEnvironment}
+											setEnviron={setEnviron}
+											sceneItems={sceneItems}
+											setSceneItems={setSceneItems}
+										/>
+									</>
+								)}
+							</Tab>
+							<button onClick={handleSubmit} className="w-full bg-rose-500 rounded-lg py-1.5 font-medium hover:bg-rose-600 focus:bg-rose-600 transition-all duration-300">Generate</button>
+						</Tab.List>
+					</Tab.Group>
 					<a
 						href="#"
 						className="flex items-center gap-1 px-3 p-3 text-gray-200 fixed bottom-0"
@@ -100,120 +132,19 @@ export default function NavBar() {
 				</div>
 			</nav>
 			<MobileNav
-				setIsOpen={setIsOpen}
-				isOpen={isOpen}
-				handleSubmit={handleSubmit}
-				setShowSettings={setShowSettings}
-				showSettings={showSettings}
+				properties={properties}
+				setProperties={setProperties}
+				environment={environment}
+				objectsOfEnvironment={objectsOfEnvironment}
+				setEnviron={setEnviron}
+				setEnvironment={setEnvironment}
+				setObjectOfEnvironment={setObjectOfEnvironment}
+				mountainProperties={mountainProperties}
+				livingRoomProperties={livingRoomProperties}
+				sceneItems={sceneItems}
+				setSceneItems={setSceneItems}
 			/>
 		</header>
 	);
 }
 
-function MobileNav({ setIsOpen, isOpen, handleSubmit, setShowSettings, showSettings }) {
-	return (
-		<nav className="text-white bg-black w-full p-3 md:hidden">
-			<div>
-				<Disclosure>
-					{({ open }) => (
-						<>
-							<div className="flex justify-between">
-								<div className="flex items-center gap-2 font-bold text-lg">
-									<div>
-										<img
-											className="w-12 h-12"
-											src={NavBrand}
-											alt=""
-										/>
-									</div>
-									<div>Dall-E - 360</div>
-								</div>
-								<Disclosure.Button>
-									<div
-										className={`${
-											open ? "rotate-180" : "rotate-0"
-										}
-                                            transition-all duration-500 rounded-full border-2 p-0.5 flex items-center justify-center border-t-red-400`}
-									>
-										<ChevronDown />
-									</div>
-								</Disclosure.Button>
-							</div>
-							<Transition
-								show={open}
-								enter="transition duration-300 ease-out"
-								enterFrom="transform translate-y-full opacity-0"
-								enterTo="transform translate-y-0 opacity-100"
-								leave="transition duration-300 ease-out"
-								leaveFrom="transform translate-y-full opacity-100"
-								leaveTo="transform scale-50 opacity-0"
-							>
-								<Disclosure.Panel className="mt-2 p-2 font-medium space-y-2">
-									<a
-										href="#"
-										className="flex  items-center gap-2 hover:translate-x-2 duration-300"
-									>
-										<div className="h-1.5 w-1.5 bg-rose-600 rounded-full"></div>
-										Home
-									</a>
-									<a
-										href="#"
-										className="flex  items-center gap-2 hover:translate-x-2 duration-300"
-									>
-										<div className="h-1.5 w-1.5 bg-white rounded-full"></div>
-										Early Access
-									</a>
-									<a
-										href="#"
-										className="flex  items-center gap-2 hover:translate-x-2 duration-300"
-									>
-										<div className="h-1.5 w-1.5 bg-white rounded-full"></div>
-										Gallery
-									</a>
-									<button
-										onClick={() => setIsOpen(true)}
-										className="flex  items-center gap-2 hover:translate-x-2 duration-300"
-									>
-										<div
-											className={`h-1.5 w-1.5 ${
-												isOpen
-													? "bg-rose-600"
-													: "bg-white"
-											} rounded-full`}
-										></div>
-										Prompt
-										<InputPrompt
-											isOpen={isOpen}
-											setIsOpen={setIsOpen}
-											onSubmit={handleSubmit}
-										/>
-									</button>
-									<button
-										onClick={() => setShowSettings(true)}
-										className="flex items-center gap-2 hover:translate-x-2 duration-300"
-									>
-										<div
-											className={`h-1.5 w-1.5 ${
-												showSettings
-													? "bg-rose-600"
-													: "bg-white"
-											} rounded-full`}
-										></div>
-										<div>
-											View 360
-											<sup>o</sup>
-										</div>
-										<SettingsPrompt
-											isOpen={showSettings}
-											setIsOpen={setShowSettings}
-										/>
-									</button>
-								</Disclosure.Panel>
-							</Transition>
-						</>
-					)}
-				</Disclosure>
-			</div>
-		</nav>
-	);
-}

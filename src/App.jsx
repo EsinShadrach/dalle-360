@@ -5,9 +5,9 @@ import MyComponent from './apple'
 function App() {
 	return (
     <div className="fixed w-full">
-      {/* <NavBar />
-      <Body /> */}
-      <MyComponent />
+      <NavBar />
+      <Body />
+      {/* <MyComponent /> */}
     </div>
     
   )

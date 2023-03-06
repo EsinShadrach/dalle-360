@@ -1,52 +1,83 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-function ImageGenerator() {
-  const [text, setText] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
+function BeerList() {
+  const [imageUrl, setImageUrl] = useState("");
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+const generateImage = () => {
+    console.log("Working...")
+    const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            text: "A Equirectangular view of luxury house surrounded by LED lights, seats, coffee table, carpet, Dinner table, wide windows, stylish paintings, Trinket",
+        }),
+        
+    };
 
-    fetch('https://dalle360-6k6gsdlfoa-el.a.run.app/generate-image', {
-      method: 'POST',
-      mode:'no-cors',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        text: text
-      })
-    })
-      .then(response => response.json())
-      .then((data) =>{
-            setImageUrl(data.url)
-            console.log(data)
+    fetch(
+        "https://dalle360-6k6gsdlfoa-el.a.run.app/generate-image",
+        requestOptions
+    )
+        .then((response) => {
+            console.log(`This is response: ${response}`)
+            response.json()
         })
-      .catch((error) => {
-            console.error(error)
-        });
-      console.log("SUBMITTING")
-  };
+        .then((data) =>{
+                console.log(`This is data: ${data}`)
+                setImageUrl(data.url)
+            })
+        .catch((error) => console.error(`Rafe Here's an error: ${error}`));
+    console.log(`This is Img url ${imageUrl}`)
+};
 
-  const handleTextChange = (event) => {
-    setText(event.target.value);
-  };
-
-  return (
+return (
     <div>
-      <h1>Image Generator</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Text:
-          <input className='border' type="text" value={text} onChange={handleTextChange} />
-        </label>
-        <button className='border bg-blue-100 text-blue-900 rounded-md p-1 px-3 m-3' type="submit">Generate Image</button>
-      </form>
-      {imageUrl && (
-        <img src={imageUrl} alt="Generated Image" />
-      )}
+        <button onClick={generateImage}>Generate Image</button>
+        {imageUrl && <img src={imageUrl} alt="Generated Image" />}
     </div>
-  );
+);
 }
+/*
+{
+  "id": 2745,
+  "uid": "7f240454-71cf-455a-a227-a7bee72a76d5",
+  "brand": "Lowenbrau",
+  "name": "Nugget Nectar",
+  "style": "Dark Lager",
+  "hop": "Ultra",
+  "yeast": "3787 - Trappist High Gravity",
+  "malts": "Caramel",
+  "ibu": "48 IBU",
+  "alcohol": "6.1%",
+  "blg": "19.7°Blg"
+}
+*/ 
 
-export default ImageGenerator;
+export default BeerList;
+
+// const [imageUrl, setImageUrl] = useState("");
+
+// const generateImage = () => {
+//     const requestOptions = {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify({
+//             text: "A Equirectangular view of luxury house surrounded by LED lights, seats, coffee table, carpet, Dinner table, wide windows, stylish paintings, Trinket",
+//         }),
+//     };
+
+//     fetch(
+//         "https://dalle360-6k6gsdlfoa-el.a.run.app/generate-image",
+//         requestOptions
+//     )
+//         .then((response) => response.json())
+//         .then((data) => setImageUrl(data.imageUrl))
+//         .catch((error) => console.log(error));
+// };
+
+// return (
+//     <div>
+//         <button onClick={generateImage}>Generate Image</button>
+//         {imageUrl && <img src={imageUrl} alt="Generated Image" />}
+//     </div>
+// );
