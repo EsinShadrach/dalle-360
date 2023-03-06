@@ -70,7 +70,7 @@ export default function NavBar() {
 										<div
 											className={`h-1.5 w-1.5 rounded-full transition-all duration-300 ${
 												selected
-													? "bg-rose-500 h-full"
+													? "bg-rose-500 h-5"
 													: "bg-white"
 											}`}
 										></div>
@@ -87,7 +87,7 @@ export default function NavBar() {
 										<div
 											className={`h-1.5 w-1.5 rounded-full transition-all duration-300 ${
 												selected
-													? "bg-rose-500 h-full"
+													? "bg-rose-500 h-5"
 													: "bg-white"
 											}`}
 										></div>
@@ -104,7 +104,7 @@ export default function NavBar() {
 										<div
 											className={`h-1.5 w-1.5 rounded-full transition-all duration-300 ${
 												selected
-													? "bg-rose-500 h-full"
+													? "bg-rose-500 h-5"
 													: "bg-white"
 											}`}
 										></div>
