@@ -48,9 +48,9 @@ export default function NavBar() {
 
 	return (
 		// Making 2 navbar
-		<header className="fixed w-full z-50 bg-black">
+		<header className="fixed w-full z-50">
 			<nav className="hidden md:flex bg-black text-white fixed h-screen p-3">
-				<div className="flex flex-col h-full gap-36">
+				<div className="flex flex-col h-full gap-36 overflow-auto">
 					<div className="flex items-center justify-center gap-2">
 						<div>
 							<img className="w-16 h-16" src={NavBrand} alt="" />
