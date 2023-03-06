@@ -9,3 +9,14 @@
         @apply border-blue-400
 	}
 }
+
+::-webkit-scrollbar{
+	@apply bg-black w-2 rounded-md;
+}
+::-webkit-scrollbar-thumb{
+	@apply bg-rose-500 rounded-md hover:bg-rose-600;
+}
+
+::-webkit-scrollbar-track{
+	@apply bg-black rounded-md;
+}
