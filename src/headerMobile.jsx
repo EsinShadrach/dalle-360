@@ -27,12 +27,14 @@ export default function MobileNav({
 			setObjectOfEnvironment(livingRoomProperties);
 		}
 	}
-	
-	function handleSubmit(){
-		let toBeSubmitted = `An Equirectangular view of a ${environment} with ${sceneItems.join(", ")}.`
+
+	function handleSubmit() {
+		let toBeSubmitted = `An Equirectangular view of a ${environment} with ${sceneItems.join(
+			", "
+		)}.`;
 		console.log(toBeSubmitted);
 	}
-	
+
 	return (
 		<nav className="text-white bg-black w-full p-3 md:hidden overflow-scroll">
 			<div>
@@ -146,21 +148,6 @@ export default function MobileNav({
 															environment={
 																environment
 															}
-															setEnvironment={
-																setEnvironment
-															}
-															properties={
-																properties
-															}
-															setProperties={
-																setProperties
-															}
-															setObjectOfEnvironment={
-																setObjectOfEnvironment
-															}
-															objectsOfEnvironment={
-																objectsOfEnvironment
-															}
 															setEnviron={
 																setEnviron
 															}
@@ -190,23 +177,11 @@ export default function MobileNav({
 															environment={
 																environment
 															}
-															setEnvironment={
-																setEnvironment
-															}
 															properties={
 																properties
 															}
-															setProperties={
-																setProperties
-															}
-															setObjectOfEnvironment={
-																setObjectOfEnvironment
-															}
 															objectsOfEnvironment={
 																objectsOfEnvironment
-															}
-															setEnviron={
-																setEnviron
 															}
 															sceneItems={
 																sceneItems
@@ -218,7 +193,12 @@ export default function MobileNav({
 													</a>
 												)}
 											</Tab>
-											<button onClick={handleSubmit} className="w-full bg-rose-500 rounded-lg py-1.5 font-medium hover:bg-rose-600 focus:bg-rose-600 transition-all duration-300">Generate</button>
+											<button
+												onClick={handleSubmit}
+												className="w-full bg-rose-500 rounded-lg py-1.5 font-medium hover:bg-rose-600 focus:bg-rose-600 transition-all duration-300"
+											>
+												Generate
+											</button>
 										</Tab.List>
 									</Tab.Group>
 								</Disclosure.Panel>

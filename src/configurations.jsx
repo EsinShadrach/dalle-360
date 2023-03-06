@@ -3,15 +3,9 @@ import { CheckCircle, ChevronDown } from "heroicons-react";
 
 export default function EnvironmentConfig({
 	styling,
-	properties,
-	setProperties,
 	environment,
-	setEnvironment,
-	objectsOfEnvironment,
-	setObjectOfEnvironment,
 	setEnviron,
 }) {
-
 	return (
 		<>
 			<Disclosure className="w-full">
