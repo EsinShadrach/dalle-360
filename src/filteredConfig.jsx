@@ -71,7 +71,7 @@ export default function FilteredConfig({
 														></div>
 														<div className="flex items-center justify-between w-full">
 															{environ}
-															{selected && (
+															{sceneItems.includes(environ) && (
 																<CheckCircle />
 															)}
 														</div>
