@@ -130,7 +130,7 @@ export default function MobileNav({
 												{({ selected }) => (
 													<a
 														href="#"
-														className="flex flex-row items-center gap-2 focus:outline-none hover:translate-x-2 focus:translate-x-2 duration-300 w-full"
+														className="flex flex-row items-center gap-2 focus:outline-none duration-300 w-full"
 													>
 														<div
 															className={`h-1.5 w-1.5 rounded-full transition-all duration-300 ${
@@ -159,7 +159,7 @@ export default function MobileNav({
 												{({ selected }) => (
 													<a
 														href="#"
-														className="flex flex-row items-center gap-2 focus:outline-none hover:translate-x-2 focus:translate-x-2 duration-300 w-full"
+														className="flex flex-row items-center gap-2 focus:outline-none duration-300 w-full"
 													>
 														<div
 															className={`h-1.5 w-1.5 rounded-full transition-all duration-300 ${
