@@ -36,12 +36,12 @@ export default function MobileNav({
 	}
 
 	return (
-		<nav className="text-white bg-black w-full p-3 md:hidden overflow-scroll">
+		<nav className="text-white bg-black w-full p-3 md:hidden">
 			<div>
 				<Disclosure>
 					{({ open }) => (
 						<>
-							<div className="flex justify-between">
+							<div className="flex justify-between bg-black rounded-md">
 								<div className="flex items-center gap-2 font-bold text-lg">
 									<div>
 										<img
